@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 import '../../base/functions.dart';
@@ -46,6 +47,7 @@ class _VerifyOTPViewState extends State<VerifyOTPView> {
                 //handle validation or checks here
               },
               onSubmit: (String verificationCode) async {
+                EasyLoading.show(status: "Logging in, please wait");
                 await functions.loginUser(
                   context,
                   verificationCode,
