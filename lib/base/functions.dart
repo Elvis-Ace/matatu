@@ -12,12 +12,16 @@ class MyFunctions {
   BaseData baseData = BaseData();
   SessionData sessionData = SessionData();
 
-  requestOtp(String plate) async {
+  requestOtp(context, String plate) async {
     EasyLoading.show(status: "You'll receive an OTP for login");
     BaseData baseData = BaseData();
     Map map = <String, dynamic>{};
     map['plate'] = plate;
-    var data = await baseData.postData('requestpass', map);
+    var data = jsonDecode(await baseData.postData('requestpass', map));
+    debugPrint(data.toString());
+    if(data["success"] == true) {
+      Navigator.pushReplacementNamed(context, '/otp');
+    }
     debugPrint('data');
     EasyLoading.dismiss();
   }
@@ -27,6 +31,7 @@ class MyFunctions {
     EasyLoading.show(status: "Logging in, please wait");
     BaseData baseData = BaseData();
     Map map = <String, dynamic>{};
+    map['plate'] = plate;
     map['password'] = password;
     var data = jsonDecode(await baseData.postData('login', map));
     debugPrint(data.toString());

@@ -26,10 +26,6 @@ class _LoginViewState extends State<LoginView> {
           children: [
             const SizedBox(height: 50),
 
-            Image.asset(
-              'assets/images/otp.jpg',
-              height: 500,
-            ),
 
             const SizedBox(height: 50),
 
@@ -55,6 +51,7 @@ class _LoginViewState extends State<LoginView> {
                   }else{
                     EasyLoading.show(status: "Loading Please Wait");
                     await functions.requestOtp(
+                      context,
                       plate.text,
                     );
                   }

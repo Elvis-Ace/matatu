@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'SessionData.dart';
 class BaseData{
-  String baseurl = "http://129.151.163.196/";
+  String baseurl = "https://matatu.titan.africa/";
   Color basecolor = const Color(0xFF5689C0);
   List<String> incomes = ['Fixed','Allowance','Extra'];
 
