@@ -29,12 +29,14 @@ class MyFunctions {
   }
 
   loginUser(context, String password,String plate) async {
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    EasyLoading.show(status: "Logging in, please wait");
+
     BaseData baseData = BaseData();
     Map map = <String, dynamic>{};
     map['plate'] = plate;
     map['password'] = password;
+    debugPrint(map.toString());
     var data = jsonDecode(await baseData.postData('login', map));
     debugPrint(data.toString());
     if (data.containsKey("token")) {
