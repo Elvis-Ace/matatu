@@ -11,6 +11,25 @@ class BaseData{
   Color basecolor = const Color(0xFF5689C0);
   List<String> incomes = ['Fixed','Allowance','Extra'];
 
+  Future<String> getData(String url) async {
+    debugPrint('${baseurl}api/$url');
+    Map<String, String> requestHeaders = await custonheaders();
+    try {
+      Response response =
+      await get(Uri.parse('${baseurl}api/$url'), headers: requestHeaders);
+      if (kDebugMode) {
+        print(response.body);
+      }
+      return response.body;
+    } on Exception catch (e) {
+      Map map = <String,dynamic>{
+        'success': false,
+        'message':"unable to connect"
+      };
+      return map.toString();
+    }
+  }
+
   Future<String> postData(String url,map) async{
     Map<String, String> requestHeaders = await custonheaders();
     debugPrint('${baseurl}api/$url');
