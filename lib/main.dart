@@ -4,6 +4,7 @@ import 'package:matatu/pages/auth/login.dart';
 import 'package:matatu/pages/auth/otpverify.dart';
 import 'package:matatu/pages/dashboard/routeview.dart';
 import 'package:matatu/pages/homeview.dart';
+import 'package:matatu/pages/matatuview.dart';
 import 'package:matatu/pages/splashscreen.dart';
 
 void main() {
@@ -16,7 +17,8 @@ void main() {
       '/': (context) => const SplashScreen(),
       '/login': (context) => const LoginView(),
       '/homepage':(context)=>const HomeView(),
-      '/routes':(context)=>RoutesView()
+      '/routes':(context)=>RoutesView(),
+      '/matatu':(context)=>MatatuView()
     }
   ));
 }

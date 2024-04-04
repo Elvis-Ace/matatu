@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../base/functions.dart';
+import '../widgets/mytext.dart';
 
 class MatatuView extends StatefulWidget {
   const MatatuView({super.key});
@@ -55,7 +56,42 @@ class _MatatuViewState extends State<MatatuView> {
   }
 
   @override
+  void initState() {
+    getLocation();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MyTextView(
+              data: 'Vehicle Registration: KDN 683Z',
+              fontsize: 20,
+              fontWeight: FontWeight.bold,
+              maxlines: 1,
+            ),
+            SizedBox(height: 16),
+            MyTextView(
+              data: 'Driver: Naphtali Makori',
+              fontsize: 20,
+              fontWeight: FontWeight.w500,
+              maxlines: 1,
+            ),
+            MyTextView(
+              data: 'Conductor: Charles Kimani',
+              fontsize: 20,
+              fontWeight: FontWeight.w500,
+              maxlines: 1,
+            ),
+
+          ],
+        ),
+      ),
+    );
   }
 }

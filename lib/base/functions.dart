@@ -55,7 +55,10 @@ class MyFunctions {
     map['lat'] = lat;
     map['long'] = long;
     var data = await baseData.postData('coordinates', map);
-    debugPrint('data');
+
+    debugPrint(data.toString());
     EasyLoading.dismiss();
   }
+
+
 }
