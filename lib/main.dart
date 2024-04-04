@@ -14,7 +14,7 @@ void main() {
       '/': (context) => const SplashScreen(),
       '/login': (context) => const LoginView(),
       '/homepage':(context)=>const HomeView(),
-      '/rotes':(context)=>RoutesView()
+      '/routes':(context)=>RoutesView()
     }
   ));
 }

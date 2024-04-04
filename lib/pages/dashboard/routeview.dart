@@ -7,6 +7,14 @@ class RoutesView extends StatefulWidget {
 }
 
 class _RoutesViewState extends State<RoutesView> {
+  getRoutes()async{
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return const Placeholder();

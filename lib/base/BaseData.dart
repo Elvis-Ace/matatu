@@ -23,6 +23,7 @@ class BaseData{
         if (kDebugMode) {
           print(response.body);
         }
+        EasyLoading.dismiss();
         return response.body;
       } else {
         if (kDebugMode) {
