@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../base/functions.dart';
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -11,6 +14,10 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+
+  MyFunctions functions = MyFunctions();
+  late Timer timer;
+
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
   static const CameraPosition _kGooglePlex = CameraPosition(
@@ -18,7 +25,11 @@ class _HomeViewState extends State<HomeView> {
     zoom: 14.4746,
   );
 
-
+  sendCoordinatesTimer(double lat, double long) async {
+    timer = Timer.periodic(const Duration(seconds: 30), (timer) {
+      functions.sendCoordinates(lat, long);
+    });
+  }
 
   getLocation() async {
     LocationPermission permission;
@@ -29,12 +40,16 @@ class _HomeViewState extends State<HomeView> {
     double lat = position.latitude;
     double long = position.longitude;
 
+    sendCoordinatesTimer(lat, long);
     LatLng location = LatLng(lat, long);
+
     CameraPosition _kLake = CameraPosition(
         bearing: 192.8334901395799,
         target: location,
         tilt: 59.440717697143555,
         zoom: 19.151926040649414);
+
+
     final GoogleMapController controller = await _controller.future;
     await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
 
