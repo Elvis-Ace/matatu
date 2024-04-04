@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:matatu/base/BaseData.dart';
 import 'package:matatu/widgets/mybutton.dart';
 import 'package:matatu/widgets/mytext.dart';
@@ -17,6 +18,8 @@ class _RoutesViewState extends State<RoutesView> {
   List<dynamic> routes = [];
   String dropdownValue = "Select Route";
   getRoutes()async{
+
+    EasyLoading.show(status:"Loading Please Wait");
     var response = jsonDecode(await baseData.getData('routes'));
     if(response['success'] == true){
       routes = response['data'];
