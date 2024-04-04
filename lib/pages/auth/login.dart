@@ -64,6 +64,9 @@ class _LoginViewState extends State<LoginView> {
 
             const SizedBox(height: 50),
 
+            MyButton(text: "Dashboard", color: Colors.green, function: (){
+              
+            })
           ],
         ),
       ),
