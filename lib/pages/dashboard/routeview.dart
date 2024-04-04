@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:matatu/base/BaseData.dart';
 class RoutesView extends StatefulWidget {
   const RoutesView({super.key});
 
@@ -7,8 +10,9 @@ class RoutesView extends StatefulWidget {
 }
 
 class _RoutesViewState extends State<RoutesView> {
+  BaseData baseData = BaseData();
   getRoutes()async{
-
+    var response = jsonDecode(await baseData.getData('routes'));
   }
   @override
   void initState() {
