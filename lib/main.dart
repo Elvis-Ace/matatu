@@ -13,7 +13,6 @@ void main() {
       '/': (context) => const SplashScreen(),
       '/login': (context) => const LoginView(),
       '/homepage':(context)=>const HomeView(),
-      '/otp':(context)=>const VerifyOTPView()
     }
   ));
 }

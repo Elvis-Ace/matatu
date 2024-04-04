@@ -6,7 +6,8 @@ import '../../widgets/mybutton.dart';
 import '../../widgets/mytext.dart';
 
 class VerifyOTPView extends StatefulWidget {
-  const VerifyOTPView({super.key});
+  String plate;
+  VerifyOTPView({required this.plate,super.key});
 
   @override
   State<VerifyOTPView> createState() => _VerifyOTPViewState();
@@ -48,6 +49,7 @@ class _VerifyOTPViewState extends State<VerifyOTPView> {
                 await functions.loginUser(
                   context,
                   verificationCode,
+                  widget.plate
                 );
               },
             ),

@@ -26,12 +26,16 @@ class _LoginViewState extends State<LoginView> {
           children: [
             const SizedBox(height: 50),
 
+            Image.asset(
+              'assets/images/otp.jpg',
+              height: 200,
+            ),
 
             const SizedBox(height: 50),
 
             const Center(
               child: MyTextView(
-                data: 'Send your number plate for verification',
+                data: 'Enter Plate Number',
                 fontsize: 20,
                 fontWeight: FontWeight.bold,
                 maxlines: 1,

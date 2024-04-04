@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:matatu/pages/auth/otpverify.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'BaseData.dart';
@@ -20,13 +22,13 @@ class MyFunctions {
     var data = jsonDecode(await baseData.postData('requestpass', map));
     debugPrint(data.toString());
     if(data["success"] == true) {
-      Navigator.pushReplacementNamed(context, '/otp');
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>VerifyOTPView(plate: plate)));
     }
     debugPrint('data');
     EasyLoading.dismiss();
   }
 
-  loginUser(context, String password) async {
+  loginUser(context, String password,String plate) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     EasyLoading.show(status: "Logging in, please wait");
     BaseData baseData = BaseData();
