@@ -11,7 +11,7 @@ class SessionData{
 
   userData(response)async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(plate, response['user']['plate']);
+    await prefs.setString(plate, response['vehicle']['plate']);
     await prefs.setString(token, response['token']);
   }
 }

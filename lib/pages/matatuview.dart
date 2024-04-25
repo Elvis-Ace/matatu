@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../base/functions.dart';
+import '../widgets/mybutton.dart';
 import '../widgets/mytext.dart';
 
 class MatatuView extends StatefulWidget {
@@ -88,6 +89,10 @@ class _MatatuViewState extends State<MatatuView> {
               fontWeight: FontWeight.w500,
               maxlines: 1,
             ),
+            MyButton(text: "My Routes", color: Colors.green, function: (){
+              Navigator.pushNamed(context, '/vehicleroute');
+              //Navigator.pushReplacementNamed(context, '/routes');
+            })
 
           ],
         ),

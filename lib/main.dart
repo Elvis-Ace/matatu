@@ -6,6 +6,7 @@ import 'package:matatu/pages/dashboard/routeview.dart';
 import 'package:matatu/pages/homeview.dart';
 import 'package:matatu/pages/matatuview.dart';
 import 'package:matatu/pages/splashscreen.dart';
+import 'package:matatu/pages/vehicleroute.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -16,9 +17,9 @@ void main() {
     routes: {
       '/': (context) => const SplashScreen(),
       '/login': (context) => const LoginView(),
-      '/homepage':(context)=>const HomeView(),
       '/routes':(context)=>RoutesView(),
-      '/matatu':(context)=>MatatuView()
+      '/matatu':(context)=>MatatuView(),
+      '/vehicleroute':(context)=>VehicleRoute(),
     }
   ));
 }

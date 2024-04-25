@@ -39,9 +39,9 @@ class MyFunctions {
     debugPrint(map.toString());
     var data = jsonDecode(await baseData.postData('login', map));
     debugPrint(data.toString());
-    if (data.containsKey("token")) {
-      await sessionData.userData(data);
-      Navigator.pushReplacementNamed(context, '/homepage');
+    if (data["success"] == true) {
+      await sessionData.userData(data["data"]);
+      Navigator.pushReplacementNamed(context, '/matatu');
     } else {
       EasyLoading.showError("Invalid Credentials");
     }
@@ -53,7 +53,7 @@ class MyFunctions {
     BaseData baseData = BaseData();
     Map map = <String, dynamic>{};
     map['lat'] = lat;
-    map['long'] = long;
+    map['lon'] = long;
     var data = await baseData.postData('coordinates', map);
 
     debugPrint(data.toString());

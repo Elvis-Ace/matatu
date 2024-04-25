@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:matatu/base/BaseData.dart';
+import 'package:matatu/pages/homeview.dart';
 import 'package:matatu/widgets/mybutton.dart';
 import 'package:matatu/widgets/mytext.dart';
 class RoutesView extends StatefulWidget {
@@ -17,16 +18,19 @@ class _RoutesViewState extends State<RoutesView> {
   List<String> list = ["Select Route"];
   List<dynamic> routes = [];
   String dropdownValue = "Select Route";
-  getRoutes()async{
+  getRoutes()async {
 
     EasyLoading.show(status:"Loading Please Wait");
     var response = jsonDecode(await baseData.getData('routes'));
+    debugPrint(response.toString());
     if(response['success'] == true){
       routes = response['data'];
-      for(int i =0;i<response['data'].length;i++){
+      for(int i = 0; i<response['data'].length; i++){
         list.add(response['data'][i]['name']);
       }
     }
+    EasyLoading.dismiss();
+
 
     setState(() {
 
@@ -69,8 +73,9 @@ class _RoutesViewState extends State<RoutesView> {
               }).toList(),
             ),
           ),
-          MyButton(text: "View Data", color: Colors.red, function: (){
-
+          MyButton(text: "View Data", color: Colors.red, function: () {
+            var route = routes.where((element) => element['name'] == dropdownValue).first;
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeView(route: route['id'].toString(), name: dropdownValue)));
           })
         ],
       ),
