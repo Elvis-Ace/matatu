@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -19,7 +16,7 @@ class MyFunctions {
     BaseData baseData = BaseData();
     Map map = <String, dynamic>{};
     map['plate'] = plate;
-    var data = jsonDecode(await baseData.postData('requestpass', map));
+    var data = await baseData.postData('requestpass', map);
     debugPrint(data.toString());
     if(data["success"] == true) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>VerifyOTPView(plate: plate)));
@@ -37,7 +34,7 @@ class MyFunctions {
     map['plate'] = plate;
     map['password'] = password;
     debugPrint(map.toString());
-    var data = jsonDecode(await baseData.postData('login', map));
+    var data = await baseData.postData('login', map);
     debugPrint(data.toString());
     if (data["success"] == true) {
       await sessionData.userData(data["data"]);
@@ -49,7 +46,6 @@ class MyFunctions {
   }
 
   sendCoordinates(double lat, double long) async {
-    EasyLoading.show(status: "You'll receive an OTP for login");
     BaseData baseData = BaseData();
     Map map = <String, dynamic>{};
     map['lat'] = lat;

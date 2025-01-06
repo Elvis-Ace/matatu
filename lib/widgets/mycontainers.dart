@@ -44,35 +44,37 @@ class _MyListItemsState extends State<MyListItems> {
             ),
           ),
           const SizedBox(width: 5,),
-          PsIconButton(icon: Icons.delete, color: Colors.red, function: ()=>showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              title: Row(
-                children: [
-                  Expanded(child: MyTextView(data: 'Delete ${widget.name}')),
-                  IconButton(
-                    icon: const Icon(Icons.cancel_outlined),
-                    tooltip: 'Cancel',
-                    onPressed:() => Navigator.pop(context, 'Close'),
+          MyIconButton(icon: Icons.delete, color: Colors.red, action: (){
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Row(
+                  children: [
+                    Expanded(child: MyTextView(data: 'Delete ${widget.name}')),
+                    IconButton(
+                      icon: const Icon(Icons.cancel_outlined),
+                      tooltip: 'Cancel',
+                      onPressed:() => Navigator.pop(context, 'Close'),
+                    ),
+                  ],
+                ),
+                content: MyTextView(data: "Are You sure you want to Delete ${widget.name}"),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: (){
+                      widget.function(widget.id);
+                      Navigator.pop(context, 'Yes');
+                    },
+                    child: const Text('Delete'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'No'),
+                    child: const Text('Cancel'),
                   ),
                 ],
               ),
-              content: MyTextView(data: "Are You sure you want to Delete ${widget.name}"),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: (){
-                    widget.function(widget.id);
-                    Navigator.pop(context, 'Yes');
-                  },
-                  child: const Text('Delete'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'No'),
-                  child: const Text('Cancel'),
-                ),
-              ],
-            ),
-          )),
+            );
+          }, text: 'Delete', textcolor: Colors.white,),
           const SizedBox(width: 15,),
         ],
       ),

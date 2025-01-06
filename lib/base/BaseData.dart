@@ -1,81 +1,107 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'SessionData.dart';
 class BaseData{
-  String baseurl = "https://matatu.titan.africa/";
+  String baseurl = "https://logistics.afyanova.africa/";
   Color basecolor = const Color(0xFF5689C0);
+  Color primary = const Color(0xFF5689C0);
   List<String> incomes = ['Fixed','Allowance','Extra'];
+  final dio = Dio();
+  Future<Map> getData(String url) async {
+    Map<String, dynamic> requestHeaders = await custonheaders();
 
-  Future<String> getData(String url) async {
     debugPrint('${baseurl}api/$url');
-    Map<String, String> requestHeaders = await custonheaders();
     try {
-      Response response =
-      await get(Uri.parse('${baseurl}api/$url'), headers: requestHeaders);
-      if (kDebugMode) {
-        print(response.body);
-      }
-      return response.body;
-    } on Exception catch (e) {
-      Map map = <String,dynamic>{
-        'success': false,
-        'message':"unable to connect"
-      };
-      return map.toString();
-    }
-  }
+      // Initialize the response
+      Response response;
 
-  Future<String> postData(String url,map) async{
-    Map<String, String> requestHeaders = await custonheaders();
-    debugPrint('${baseurl}api/$url');
-    try{
-      Response response = await post(Uri.parse('${baseurl}api/$url'),body: jsonEncode(map),headers: requestHeaders);
-      if (kDebugMode) {
-        print('response ${response.body}');
-      }
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        if (kDebugMode) {
-          print(response.body);
-        }
-        EasyLoading.dismiss();
-        return response.body;
+      // Make the GET request
+      response = await dio.get(
+        '${baseurl}api/$url',
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) => true,
+          headers: requestHeaders,
+        ),
+      );
+
+      // Print the response data for debugging
+      debugPrint("server: ${response.data.toString()}");
+
+      // Return the response data
+      return response.data;
+    } on DioException catch (e) {
+      // Handle Dio-specific errors
+      if (e.response != null) {
+        // The server responded with a non-2xx status code
+        debugPrint('Server error: ${e.response?.statusCode} - ${e.response?.data}');
       } else {
-        if (kDebugMode) {
-          print("server response : ${response.statusCode}");
-        }
-        const data = {'status':'failed','response':'Failed to connect to server'};
-        return jsonEncode(data);
+        // Other types of errors, like no internet connection
+        debugPrint('Network or request error: ${e.message}');
       }
-    }on Exception catch(e){
-      EasyLoading.dismiss();
-      EasyLoading.showError("Failed to connect");
-      return "0";
+      return {
+        'success':false,
+      }; // Return null or handle the error as needed
+    } catch (e) {
+      // Handle any other types of errors
+      debugPrint('Unexpected error: $e');
+      return {
+        'success':false,
+      };
     }
-
   }
 
-  custonheaders() async{
+  Future<Map> postData(String url, map) async {
+    debugPrint('${baseurl}api/$url');
+    try {
+      // Debug print the map to see the data being sent
+      debugPrint(map.toString());
+
+      // Fetch the custom headers
+      Map<String, dynamic> requestHeaders = await custonheaders();
+
+      // Make the POST request
+      Response response = await dio.post(
+        '${baseurl}api/$url',
+        data: map, // Creates a Stream<List<int>>.
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) => true,
+          headers: requestHeaders,
+        ),
+      );
+
+      // Debug print the response data
+      debugPrint(response.data.toString());
+
+      // Return the response data if successful
+      return response.data;
+    } catch (e) {
+      // Catch and log any errors that occur during the request
+      debugPrint('Request failed with error: $e');
+      return {
+        'success':false,
+      }; // Return null or handle the error accordingly
+    }
+  }
+
+  custonheaders() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     SessionData sessionData = SessionData();
     String? token = prefs.getString(sessionData.token);
     debugPrint(token);
     Map<String, String> requestHeaders = {};
-    if(token != null){
+    if (token != null) {
       requestHeaders = {
-        'Content-type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
       };
-    }else{
-      requestHeaders = {
-        'Content-type': 'application/json',
-        'Accept': 'application/json'
-      };
+    } else {
+      requestHeaders = {'Accept': 'application/json'};
     }
 
     return requestHeaders;

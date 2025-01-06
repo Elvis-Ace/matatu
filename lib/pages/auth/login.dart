@@ -33,7 +33,7 @@ class _LoginViewState extends State<LoginView> {
 
             const SizedBox(height: 50),
 
-            const Center(
+            Center(
               child: MyTextView(
                 data: 'Enter Plate Number',
                 fontsize: 20,
@@ -49,7 +49,7 @@ class _LoginViewState extends State<LoginView> {
             MyButton(
                 text: "Send OTP",
                 color: Colors.blue,
-                function: () async {
+                action: () async {
                   if(plate.text.isEmpty){
 
                   }else{
@@ -59,15 +59,15 @@ class _LoginViewState extends State<LoginView> {
                       plate.text,
                     );
                   }
-                }
+                }, textcolor: Colors.white,
             ),
 
             const SizedBox(height: 50),
 
-            MyButton(text: "Dashboard", color: Colors.green, function: (){
+            MyButton(text: "Dashboard", color: Colors.green, action: (){
               Navigator.pushNamed(context, '/routes');
               //Navigator.pushReplacementNamed(context, '/routes');
-            })
+            }, textcolor: Colors.white,)
           ],
         ),
       ),

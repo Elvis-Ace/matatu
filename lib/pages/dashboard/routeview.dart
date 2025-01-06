@@ -21,7 +21,7 @@ class _RoutesViewState extends State<RoutesView> {
   getRoutes()async {
 
     EasyLoading.show(status:"Loading Please Wait");
-    var response = jsonDecode(await baseData.getData('routes'));
+    var response = await baseData.getData('routes');
     debugPrint(response.toString());
     if(response['success'] == true){
       routes = response['data'];
@@ -73,7 +73,7 @@ class _RoutesViewState extends State<RoutesView> {
               }).toList(),
             ),
           ),
-          MyButton(text: "View Data", color: Colors.red, function: () {
+          MyButton(text: "View Data", color: Colors.red,textcolor: Colors.white, action: () {
             var route = routes.where((element) => element['name'] == dropdownValue).first;
             Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeView(route: route['id'].toString(), name: dropdownValue)));
           })

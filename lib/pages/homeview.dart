@@ -58,7 +58,7 @@ class _HomeViewState extends State<HomeView> {
   
   fetchvehicles()async{
     EasyLoading.show(status: "Fetching Vehicles in ${widget.name} Route");
-    var data = jsonDecode(await baseData.getData('incoming/${widget.route}'));
+    var data = await baseData.getData('incoming/${widget.route}');
     if(data['success'] == true){
       debugPrint(data['data'].toString());
       for(int i = 0;i<data['data'].length;i++){
